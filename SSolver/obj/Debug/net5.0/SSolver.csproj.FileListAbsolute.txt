@@ -1,0 +1,16 @@
+/home/x2026328/RiderProjects/SSolver/SSolver/bin/Debug/net5.0/SSolver
+/home/x2026328/RiderProjects/SSolver/SSolver/bin/Debug/net5.0/SSolver.deps.json
+/home/x2026328/RiderProjects/SSolver/SSolver/bin/Debug/net5.0/SSolver.runtimeconfig.json
+/home/x2026328/RiderProjects/SSolver/SSolver/bin/Debug/net5.0/SSolver.runtimeconfig.dev.json
+/home/x2026328/RiderProjects/SSolver/SSolver/bin/Debug/net5.0/SSolver.dll
+/home/x2026328/RiderProjects/SSolver/SSolver/bin/Debug/net5.0/ref/SSolver.dll
+/home/x2026328/RiderProjects/SSolver/SSolver/bin/Debug/net5.0/SSolver.pdb
+/home/x2026328/RiderProjects/SSolver/SSolver/obj/Debug/net5.0/SSolver.csprojAssemblyReference.cache
+/home/x2026328/RiderProjects/SSolver/SSolver/obj/Debug/net5.0/SSolver.GeneratedMSBuildEditorConfig.editorconfig
+/home/x2026328/RiderProjects/SSolver/SSolver/obj/Debug/net5.0/SSolver.AssemblyInfoInputs.cache
+/home/x2026328/RiderProjects/SSolver/SSolver/obj/Debug/net5.0/SSolver.AssemblyInfo.cs
+/home/x2026328/RiderProjects/SSolver/SSolver/obj/Debug/net5.0/SSolver.csproj.CoreCompileInputs.cache
+/home/x2026328/RiderProjects/SSolver/SSolver/obj/Debug/net5.0/SSolver.dll
+/home/x2026328/RiderProjects/SSolver/SSolver/obj/Debug/net5.0/ref/SSolver.dll
+/home/x2026328/RiderProjects/SSolver/SSolver/obj/Debug/net5.0/SSolver.pdb
+/home/x2026328/RiderProjects/SSolver/SSolver/obj/Debug/net5.0/SSolver.genruntimeconfig.cache
