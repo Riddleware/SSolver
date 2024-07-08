@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 
@@ -8,9 +7,9 @@ namespace SSolver
 {
     public class Grid : List<List<Cell>>
     {
-        private int _speed;
+        private readonly int _speed;
         
-        public Grid(Grid c)
+        private Grid(Grid c)
         {
             _speed = c._speed;
             pp = c.pp;
@@ -24,18 +23,14 @@ namespace SSolver
             }
         }
 
-        public Grid() : base()
-        {
-        }
-
-        protected void Equals(Grid c)
+        private void Assign(Grid c)
         {
             foreach (var row in c)
-            foreach (var cell in row)
-                this[cell.X][cell.Y] = cell;
+                foreach (var cell in row)
+                    this[cell.X][cell.Y] = cell;
         }
 
-        public Grid(List<int> nums, int speed = 500) : base()
+        public Grid(List<int> nums, int speed = 500)
         {
             _speed = speed;
             for (int i = 0; i < 81; i++)
@@ -47,7 +42,7 @@ namespace SSolver
             }
         }
 
-        public bool Check()
+        private bool Check()
         {
             foreach (var row in this)
             foreach (var cell in row)
@@ -57,19 +52,9 @@ namespace SSolver
             return true;
         }
 
-        public List<Cell> GetRow(int x, int y)
-        {
-            return this[x];
-        }
+        public List<Cell> GetRow(int x) => this[x];
 
-        public List<Cell> GetCol(int x, int y)
-        {
-            var col = new List<Cell>();
-            foreach (var row in this)
-                col.Add(row[y]);
-
-            return col;
-        }
+        public List<Cell> GetCol(int y) => this.Select(row => row[y]).ToList();
 
         public List<Cell> GetBox(int x, int y)
         {
@@ -92,9 +77,9 @@ namespace SSolver
             }
         }
 
-        public bool SolveSimple()
+        private bool SolveSimple()
         {
-            bool somethingChanged = false;
+            bool somethingChanged;
             do
             {
                 somethingChanged = false;
@@ -116,7 +101,7 @@ namespace SSolver
             return somethingChanged;
         }
 
-        bool SolveWithGuesswork()
+        private bool SolveWithGuesswork()
         {
             var emptyCells = new List<Cell>();
             foreach (var row in this)
@@ -126,16 +111,15 @@ namespace SSolver
 
             foreach (var cell in emptyCells)
             {
-                foreach (var pos in cell.poss)
+                foreach (var pos in cell.PossibleValues)
                 {
-                    //Print("g");
                     var copy = new Grid(this);
                     copy[cell.X][cell.Y].Value = pos;
                     copy[cell.X][cell.Y].Guess = true;
                     if (copy.SolveSimple() && copy.Check())
                     {
-                        this.Equals(copy);
-                        Print("g");
+                        this.Assign(copy);
+                        Print("====");
                         return true;
                     }
 
@@ -146,36 +130,32 @@ namespace SSolver
             return false;
         }
 
-        public bool Solve()
-        {
-            return SolveSimple() || SolveWithGuesswork();
-        }
-
-        bool Solved()
+        private bool Solved()
         {
             foreach (var row in this)
-            foreach (var col in row)
-                if (col.Value == 0)
+            {
+                if (row.Any(c => c.Value == 0))
+                {
                     return false;
+                }
+            }
 
             return true;
         }
 
         private int pp = 0;
 
-        public void Print(string p = "s")
+        private void Print(string p = "s")
         {
             var oc = Console.ForegroundColor;
             Console.Clear();
-            //Console.WriteLine($"{(char) 169}-------------{(char) 170}");
+            Console.WriteLine($"{(char) 169}-------------{(char) 170}");
             foreach (var row in this)
             {
-                string r = "";
                 foreach (var col in row)
                 {
-                    //r += $"{col.Value} ";
                     Console.ForegroundColor = col.Orig ? ConsoleColor.Blue 
-                                                       : col.Value ==0 ? ConsoleColor.White 
+                                                       : col.Value == 0 ? ConsoleColor.White 
                                                        : col.Guess ? ConsoleColor.Red : ConsoleColor.Green;
                     Console.Write($"{col.Value}  ");
                 }
@@ -183,9 +163,13 @@ namespace SSolver
                 Console.Write("\r\n");
             }
 
-            //Console.WriteLine(string.Format("{0}-------------{1}", (char) 192, (char) 217));
             Console.ForegroundColor = oc;
-            //Console.WriteLine($"{p}=={pp++}++++++++");
+            Console.WriteLine($"{p}=={pp++}++++++++");
+        }
+        
+        public bool Solve()
+        {
+            return SolveSimple() || SolveWithGuesswork();
         }
     }
 }
