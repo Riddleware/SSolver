@@ -3,26 +3,33 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using CommandLine;
+using System.Threading.Tasks;
 
 namespace SSolver
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task<int> Main(string[] args)
         {
-            // while (true)
-            {
-                Console.WriteLine("Input grid line by line:");
+            return await Parser.Default.ParseArguments<CommandLineOptions>(args)
+                .MapResult(async (CommandLineOptions opts) =>
+                    {
+                        try
+                        {
+                            // while (true)
+                            {
+                                Console.WriteLine("Input grid line by line:");
 
-                List<int> ns = new();
+                                List<int> ns = new();
 
-                // for (int i = 0; i < 9; i++)
-                //{
-                //    var line = Console.ReadLine();
-                //    ns.AddRange(line.ToCharArray().ToList().Select(c => int.Parse(c.ToString())));
-               // }
+                                // for (int i = 0; i < 9; i++)
+                                //{
+                                //    var line = Console.ReadLine();
+                                //    ns.AddRange(line.ToCharArray().ToList().Select(c => int.Parse(c.ToString())));
+                                // }
 
-                var sample = @"900030800
+                                var sample = @"900030800
                                 000000104
                                 087560000
                                 060002400
@@ -31,19 +38,26 @@ namespace SSolver
                                 000049350
                                 709000000
                                 001080002";
-                
-                ns = sample
-                    .Where(s => s >= '0' && s <= '9')
-                    .Select(c => int.Parse(c.ToString())).ToList();
 
-                Grid g = new(ns, 00);
-                g.Solve();
+                                ns = sample
+                                    .Where(s => s >= '0' && s <= '9')
+                                    .Select(c => int.Parse(c.ToString())).ToList();
 
-                Console.WriteLine("Solved!");
-            }
+                                Grid g = new(ns, opts.Delay);
+                                g.Solve();
 
-            // Console.ReadKey();
-            // return;
+                                Console.WriteLine("Solved!");
+                            }
+
+                            return 0;
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Error!");
+                            return -3; // Unhandled error
+                        }
+                    },
+                    errs => Task.FromResult(-1)); // Invalid arguments
         }
     }
 }
